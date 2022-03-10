@@ -1,6 +1,8 @@
 # Hypatia
 A research helper tool for Linux-based systems
 
+<img src="hypatia-alpha-screenshot.png" width="700px">
+
 **WARNING**: This repository is currently in a pre-alpha state. If you intend to build this project, please know that the experience is not complete. Please do not review the application yet, and please do not file new bugs until the first version is released (the first release is tentatively planned for March 18th, but that date is subject to change).
 
 ## About
