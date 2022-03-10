@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Hypatia
+Exec=hypatia
+Icon=com.github.HypatiaProject.hypatia
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

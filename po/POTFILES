@@ -1,0 +1,11 @@
+data/com.github.HypatiaProject.hypatia.desktop.in
+data/com.github.hHypatiaProject.hypatia.appdata.xml.in
+data/com.github.HypatiaProject.hypatia.gschema.xml
+src/Main.vala
+src/Window.vala
+src/Application.vala
+src/InstantAnswersBox.vala
+src/DictionaryBox.vala
+src/SearchUtility.vala
+src/WelcomeBox.vala
+src/WikipediaBox.vala

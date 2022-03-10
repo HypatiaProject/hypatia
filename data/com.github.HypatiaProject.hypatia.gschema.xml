@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="hypatia">
+	<schema id="com.github.HypatiaProject.hypatia" path="/com/github/HypatiaProject/hypatia/">
+	  <key name="run-in-background" type="b">
+      <default>true</default>
+      <summary>Keep running in the background when closed.</summary>
+      <description>Whether or not to keep running when pressing the closed
+        button. This provides the fastest lookups when using keyboard shortcuts.
+      </description>
+    </key>
+    <key name="load-from-clipboard" type="b">
+      <default>true</default>
+      <summary>Load from clipboard automatically.</summary>
+      <description>Whether or not to replace the search text with the current
+        clipboard contents. This is needed for automatic lookups with keyboard
+        shortcuts.
+      </description>
+    </key>
+	  <key name="show-welcome" type="b">
+      <default>true</default>
+      <summary>Show or hide the welcome screen.</summary>
+      <description>Whether or not to show or hide the welcome screen.</description>
+    </key>
+	  <key name="first-launch" type="b">
+      <default>true</default>
+      <summary>Whether this is the first time the app runs.</summary>
+      <description>Whether or not this is the first time the app has been run
+        on a given system. Can be reset to true to restore a more default state.
+      </description>
+    </key>
+	</schema>
+</schemalist>
