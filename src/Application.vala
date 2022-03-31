@@ -48,14 +48,18 @@ namespace Hypatia {
 			win.present();
 			var window = win as Hypatia.Window;
 			window.search_requested.connect(on_search_requested);
+			window.show_about_requested.connect(on_about_action);
 			window.close_request.connect(exit_request);
 		}
 
 		private void on_about_action () {
 			string[] authors = {"Nathan Dyer"};
+			string[] artists = {"Nathan Dyer (Initial Design)"};
 			Gtk.show_about_dialog(this.active_window,
-				                  "program-name", "hypatia",
+				                  "program-name", "Hypatia",
 				                  "authors", authors,
+				                  "artists", artists,
+				                  "copyright", "Copyright © 2022 Nathan Dyer and Hypatia Project Contributors",
 				                  "version", "0.1.0");
 		}
 

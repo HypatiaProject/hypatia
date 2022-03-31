@@ -56,11 +56,6 @@ namespace Hypatia {
             left_box.hexpand = true;
             right_box.append(image);
 
-            right_box.margin_top = 12;
-            right_box.margin_bottom = 12;
-            right_box.margin_start = 12;
-            right_box.margin_end = 12;
-
             this.append(left_box);
             this.append(right_box);
 

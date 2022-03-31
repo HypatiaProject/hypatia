@@ -20,6 +20,7 @@ namespace Hypatia {
 	public class Window : Adw.ApplicationWindow {
 
 	    public signal void search_requested (string term);
+	    public signal void show_about_requested ();
 
 	    private InstantAnswersBox answers_box;
 	    private DictionaryBox dictionary_box;
@@ -93,14 +94,41 @@ namespace Hypatia {
             var settings_button = new Gtk.Button.from_icon_name("open-menu-symbolic");
             var settings_popover = new Gtk.Popover();
             settings_popover.set_parent(settings_button);
-            var settings_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+            var settings_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 6);
 
-            var run_in_background_checkbox = new Gtk.CheckButton.with_label("Keep running in background");
-            var load_from_clipboard = new Gtk.CheckButton.with_label("Automatically load content from clipboard");
-            var show_welcome_at_startup = new Gtk.CheckButton.with_label("Show welcome at start-up");
-            settings_box.append(run_in_background_checkbox);
-            settings_box.append(load_from_clipboard);
-            settings_box.append(show_welcome_at_startup);
+            var run_in_background_label = new Gtk.Label("Keep running in background");
+            run_in_background_label.halign = Gtk.Align.START;
+            run_in_background_label.hexpand = true;
+            var run_in_background_checkbox = new Gtk.CheckButton();
+            run_in_background_checkbox.margin_start = 12;
+            var run_in_background_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            run_in_background_box.hexpand = true;
+            run_in_background_box.append (run_in_background_label);
+            run_in_background_box.append (run_in_background_checkbox);
+            settings_box.append(run_in_background_box);
+
+
+            var load_from_clipboard_label = new Gtk.Label("Automatically load content from clipboard");
+            load_from_clipboard_label.halign = Gtk.Align.START;
+            load_from_clipboard_label.hexpand = true;
+            var load_from_clipboard = new Gtk.CheckButton();
+            load_from_clipboard.margin_start = 12;
+            var load_from_clipboard_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            load_from_clipboard_box.append (load_from_clipboard_label);
+            load_from_clipboard_box.append (load_from_clipboard);
+            settings_box.append(load_from_clipboard_box);
+
+
+            var show_welcome_at_startup_label = new Gtk.Label("Show welcome at start-up");
+            show_welcome_at_startup_label.halign = Gtk.Align.START;
+            show_welcome_at_startup_label.hexpand = true;
+            var show_welcome_at_startup = new Gtk.CheckButton();
+            show_welcome_at_startup.margin_start = 12;
+            var show_welcome_at_startup_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+            show_welcome_at_startup_box.append (show_welcome_at_startup_label);
+            show_welcome_at_startup_box.append (show_welcome_at_startup);
+            settings_box.append (show_welcome_at_startup_box);
+
 
             var run_in_background = app.settings.get_boolean("run-in-background");
             var automatically_load_from_clipboard = app.settings.get_boolean("load-from-clipboard");
@@ -138,10 +166,22 @@ namespace Hypatia {
                 app.settings.set_boolean("show-welcome", show_welcome_at_startup.get_active());
             });
 
+
+            var about_button = new Gtk.Button.with_label("About");
+            about_button.clicked.connect(() => {
+                show_about_requested();
+            });
+            settings_box.append(about_button);
+
             settings_popover.set_child(settings_box);
             settings_button.clicked.connect(() => {
                settings_popover.popup();
             });
+
+            var donate_button = new Gtk.LinkButton.with_label("https://ko-fi.com/nathandyer", "Buy The Developer A Coffee");
+            donate_button.get_style_context().remove_class("link");
+            donate_button.get_style_context().remove_class("flat");
+            settings_box.append(donate_button);
 
 
             // Set up the main view for the application
