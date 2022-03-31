@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<id>com.github.HypatiaProject.hypatia.desktop</id>
-	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>GPL-3.0-or-later</project_license>
-	<description>
-	  <p>No description</p>
-	</description>
+	<id>com.github.HypatiaProject.hypatia</id>
+  <launchable type="desktop-id">com.github.HypatiaProject.hypatia.desktop</launchable>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Hypatia</name>
+  <summary>A research helper tool that provides context and information about
+    interesting topics.
+  </summary>
+  <developer_name>Nathan Dyer and Hypatia Project Contributors</developer_name>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>A Sample Instant Answer</caption>
+      <image width="1019" height="650">https://raw.githubusercontent.com/HypatiaProject/hypatia/main/hypatia-alpha-screenshot.png</image>
+    </screenshot>
+  </screenshots>
+
+  <description>
+    <p>Hypatia is a research tool for the Linux desktop. It's designed to provide at-a-glance information about the topics you're reading, or about things you're curious about. It lets you find definitions, explanations, and answers related to the text on your display without removing you from the context or making you navigate away.</p>
+
+    <p>There are two ways the application can function: manually, where you open the app and enter a word or phrase to search for, or automatically, where it reads text from your clipboard on launch, and can be triggered by a shortcut.</p>
+
+    <p>Once you set a keyboard shortcut to open the app, you can copy text from the article you're reading, trigger the app, and a pop-up will give you instant information about whatever it is you're looking at.</p>
+
+    <p>Or, if you prefer to use it in manual mode, you can open it and search directly for any topic by entering it into the search box.</p>
+
+    <p>At launch, there are three main action areas:</p>
+
+    <ol>
+      <li>Instant Answers (provided by DuckDuckGo)</li>
+      <li>Dictionary and thesaurus (provided by Wiktionary, via the FreeDictionaryAPI)</li>
+      <li>Wikipedia Entries</li>
+    </ol>
+
+    <p>Searching for any term or phrase will search those sources for information, and the app will present any relevant results that it finds.</p>
+
+  </description>
+
+  <url type="bugtracker">https://github.com/HypatiaProject/hypatia/issues</url>
+
+  <provides>
+    <binary>hypatia</binary>
+  </provides>
+
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-info">mild</content_attribute>
+    <content_attribute id="money-advertising">mild</content_attribute>
+  </content_rating>
 </component>
