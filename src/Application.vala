@@ -44,12 +44,12 @@ namespace Hypatia {
 			var win = this.active_window;
 			if (win == null) {
 				win = new Hypatia.Window(this);
+				var window = win as Hypatia.Window;
+			    window.search_requested.connect(on_search_requested);
+			    window.show_about_requested.connect(on_about_action);
+			    window.close_request.connect(exit_request);
 			}
 			win.present();
-			var window = win as Hypatia.Window;
-			window.search_requested.connect(on_search_requested);
-			window.show_about_requested.connect(on_about_action);
-			window.close_request.connect(exit_request);
 		}
 
 		private void on_about_action () {
@@ -72,10 +72,6 @@ namespace Hypatia {
 			    var wikipedia_entry = SearchUtility.do_wikipedia_lookup(term);
                 win.set_entries(instant_answer, dictionary_entry, wikipedia_entry);
 			}
-		}
-
-		private void lookup_request () {
-            show_search_entry_requested();
 		}
 
 		private bool exit_request () {

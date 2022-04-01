@@ -35,8 +35,6 @@ namespace Hypatia {
 
 	    private Gtk.Spinner loading_spinner;
 
-	    private bool new_start = true;
-
 		public Window (Hypatia.Application app) {
 			Object(application: app);
 
@@ -418,11 +416,7 @@ namespace Hypatia {
                 try {
                     string search_text = clipboard.read_text_async.end(res);
                     set_search_text(search_text);
-
-                    if (new_start) {
-                        search_requested(search_text);
-                        new_start = false;
-                    }
+                    search_requested(search_text);
                 } catch (Error e) {
                     warning(_("Unable to load from clipboard."));
                 }
