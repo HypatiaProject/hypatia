@@ -89,7 +89,7 @@ namespace Hypatia {
                 return answer;
 
             } catch (Error e) {
-                warning("Unable to get instant answer for: " + term);
+                warning(_("Unable to get instant answer for: ") + term);
                 return null;
             }
         }
@@ -166,7 +166,7 @@ namespace Hypatia {
 
 
             } catch (Error e) {
-                warning("Unable to load definition for: " + term);
+                warning(_("Unable to load definition for: ") + term);
                 return null;
             }
         }
@@ -200,7 +200,7 @@ namespace Hypatia {
                 return wikipedia_entry;
 
             } catch (Error e) {
-                warning("Unable to load Wikipedia article for: " + term);
+                warning(_("Unable to load Wikipedia article for: ") + term);
                 return null;
             }
         }

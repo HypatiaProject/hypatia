@@ -6,6 +6,10 @@ project('hypatia', ['c', 'vala'],
 )
 
 i18n = import('i18n')
+add_global_arguments([
+    '-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()),
+    '-w',
+], language: 'c')
 
 dependency('gtk4', version: '>= 4.6.0')
 dependency('libadwaita-1', version :'>=1.0.0')

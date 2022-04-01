@@ -38,7 +38,7 @@ namespace Hypatia {
             dictionary_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
             thesaurus_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
 
-            dictionary_label = new Gtk.Label("Dictionary");
+            dictionary_label = new Gtk.Label(_("Dictionary"));
             dictionary_label.halign = Gtk.Align.START;
             dictionary_label.get_style_context().add_class("heading");
 
@@ -52,7 +52,7 @@ namespace Hypatia {
             pronunciation_label.get_style_context().add_class("title-4");
             pronunciation_label.set_wrap(true);
 
-            source_label = new Gtk.Label("Definitions provided by Wiktionary via Free Dictionary API");
+            source_label = new Gtk.Label(_("Definitions provided by Wiktionary via Free Dictionary API"));
             source_label.halign = Gtk.Align.START;
             source_label.get_style_context().add_class("accent");
             source_label.hide();
@@ -61,7 +61,7 @@ namespace Hypatia {
             origin_label.halign = Gtk.Align.START;
             origin_label.set_wrap(true);
 
-            not_found_label = new Gtk.Label("No definitions found.");
+            not_found_label = new Gtk.Label(_("No definitions found."));
             not_found_label.halign = Gtk.Align.START;
             not_found_label.get_style_context().add_class("title-1");
 
@@ -104,13 +104,13 @@ namespace Hypatia {
 
                 dictionary_box.append(def_label);
 
-                string synonyms = "Synonyms: ";
+                string synonyms = _("Synonyms: ");
                 foreach (var syn in def.synonyms) {
                     synonyms = synonyms + ", " + syn;
                 }
                 synonyms = synonyms.replace(" ,", "");
 
-                string antonyms = "Antonyms: ";
+                string antonyms = _("Antonyms: ");
                 foreach (var ant in def.antonyms) {
                     antonyms = antonyms + ", " + ant;
                 }

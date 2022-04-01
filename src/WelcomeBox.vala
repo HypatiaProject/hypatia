@@ -29,7 +29,7 @@ namespace Hypatia {
             welcome_label.get_style_context().add_class("large-title");
             this.append(welcome_label);
 
-            string welcome_text = "Hypatia is a research tool that finds information as you use your device.\n\nYou can enter any word or topic in the search field to find instant answers, photos, definitions, synonyms, and Wikipedia articles.\n\nBy default, every time you open the application it automatically searches for what's on your clipboard, so you can look up information about things as you browse the web and use your device. For the best workflow, we recommend setting a keyboard shortcut in your OS to launch the application, so you can find answers in a single keypress.";
+            string welcome_text = _("Hypatia is a research tool that finds information as you use your device.\n\nYou can enter any word or topic in the search field to find instant answers, photos, definitions, synonyms, and Wikipedia articles.\n\nBy default, every time you open the application it automatically searches for what's on your clipboard, so you can look up information about things as you browse the web and use your device. For the best workflow, we recommend setting a keyboard shortcut in your OS to launch the application, so you can find answers in a single keypress.");
 
             var description_label = new Gtk.Label(welcome_text);
             description_label.set_width_chars (40);
@@ -38,7 +38,7 @@ namespace Hypatia {
             description_label.valign = Gtk.Align.CENTER;
             this.append(description_label);
 
-            var button = new Gtk.Button.with_label ("Get Started");
+            var button = new Gtk.Button.with_label (_("Get Started"));
             button.get_style_context ().add_class("suggested-action");
             button.halign = Gtk.Align.END;
             button.margin_top = 12;

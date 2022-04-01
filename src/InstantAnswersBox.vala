@@ -24,7 +24,7 @@ namespace Hypatia {
 	    private Gtk.Label source_label;
 	    private Gtk.Image image;
 
-	    private string NOT_FOUND_TEXT = "No instant answer found";
+	    private string NOT_FOUND_TEXT = _("No instant answer found");
 
         public InstantAnswersBox() {
             this.set_orientation(Gtk.Orientation.HORIZONTAL);
@@ -46,7 +46,7 @@ namespace Hypatia {
             right_box.get_style_context().add_class("card");
             right_box.valign = Gtk.Align.START;
 
-            source_label = new Gtk.Label("Answers provided by DuckDuckGo");
+            source_label = new Gtk.Label(_("Answers provided by DuckDuckGo"));
             source_label.halign = Gtk.Align.START;
             source_label.get_style_context().add_class("accent");
 
@@ -87,7 +87,7 @@ namespace Hypatia {
                         image.show();
 
                     } catch (Error e) {
-                        warning("Failed to load image. %s", e.message);
+                        warning(_("Failed to load image. %s"), e.message);
                         image.hide();
                     }
                 } else {

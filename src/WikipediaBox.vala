@@ -25,7 +25,7 @@ namespace Hypatia {
 	    private Gtk.Label extract_label;
 	    private Gtk.LinkButton link_button;
 
-	    private string NOT_FOUND_TEXT = "No Wikipedia article found.";
+	    private string NOT_FOUND_TEXT = _("No Wikipedia article found.");
 
         public WikipediaBox () {
             this.set_orientation(Gtk.Orientation.VERTICAL);

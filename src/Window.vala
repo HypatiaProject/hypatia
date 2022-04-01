@@ -63,7 +63,7 @@ namespace Hypatia {
 			var share_button = new Gtk.Button.from_icon_name("emblem-shared-symbolic");
 			var share_popover = new Gtk.Popover();
 
-			tweet_button = new Gtk.Button.with_label("Share article via Tweet");
+			tweet_button = new Gtk.Button.with_label(_("Share article via Tweet"));
 			tweet_button.clicked.connect(() => {
 
                 string encoded_text = """Look%20what%20I%20found%20on%20Wikipedia%20using%20%23Hypatia%3A%20""";
@@ -107,7 +107,7 @@ namespace Hypatia {
             settings_popover.set_parent(settings_button);
             var settings_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 6);
 
-            var run_in_background_label = new Gtk.Label("Keep running in background");
+            var run_in_background_label = new Gtk.Label(_("Keep running in background"));
             run_in_background_label.halign = Gtk.Align.START;
             run_in_background_label.hexpand = true;
             var run_in_background_checkbox = new Gtk.CheckButton();
@@ -119,7 +119,7 @@ namespace Hypatia {
             settings_box.append(run_in_background_box);
 
 
-            var load_from_clipboard_label = new Gtk.Label("Automatically load content from clipboard");
+            var load_from_clipboard_label = new Gtk.Label(_("Automatically load content from clipboard"));
             load_from_clipboard_label.halign = Gtk.Align.START;
             load_from_clipboard_label.hexpand = true;
             var load_from_clipboard = new Gtk.CheckButton();
@@ -130,7 +130,7 @@ namespace Hypatia {
             settings_box.append(load_from_clipboard_box);
 
 
-            var show_welcome_at_startup_label = new Gtk.Label("Show welcome at start-up");
+            var show_welcome_at_startup_label = new Gtk.Label(_("Show welcome at start-up"));
             show_welcome_at_startup_label.halign = Gtk.Align.START;
             show_welcome_at_startup_label.hexpand = true;
             var show_welcome_at_startup = new Gtk.CheckButton();
@@ -183,7 +183,7 @@ namespace Hypatia {
             settings_box.append (separator);
 
 
-            var about_button = new Gtk.Button.with_label("About");
+            var about_button = new Gtk.Button.with_label(_("About"));
             about_button.clicked.connect(() => {
                 show_about_requested();
             });
@@ -194,7 +194,7 @@ namespace Hypatia {
                settings_popover.popup();
             });
 
-            var donate_button = new Gtk.LinkButton.with_label("https://ko-fi.com/nathandyer", "Buy The Developer A Coffee");
+            var donate_button = new Gtk.LinkButton.with_label("https://ko-fi.com/nathandyer", _("Buy The Developer A Coffee"));
             donate_button.get_style_context().remove_class("link");
             donate_button.get_style_context().remove_class("flat");
             settings_box.append(donate_button);
@@ -217,7 +217,7 @@ namespace Hypatia {
             search_entry = new Gtk.Entry();
             search_entry.get_style_context().add_class("linked");
             search_entry.width_chars = 35;
-            search_entry.placeholder_text = "Enter Search Term";
+            search_entry.placeholder_text = _("Enter Search Term");
             search_term_box.append(search_entry);
             search_term_revealer.set_child(search_term_box);
 
@@ -304,9 +304,9 @@ namespace Hypatia {
             box.append(carousel);
 
             var button_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-            var instant_answers_button = new Gtk.ToggleButton.with_label("Instant Answers");
-            var dictionary_button = new Gtk.ToggleButton.with_label("Definitions");
-            var wikipedia_button = new Gtk.ToggleButton.with_label("Wikipedia");
+            var instant_answers_button = new Gtk.ToggleButton.with_label(_("Instant Answers"));
+            var dictionary_button = new Gtk.ToggleButton.with_label(_("Definitions"));
+            var wikipedia_button = new Gtk.ToggleButton.with_label(_("Wikipedia"));
 
             button_box.append(instant_answers_button);
             button_box.append(dictionary_button);
@@ -415,7 +415,7 @@ namespace Hypatia {
                         new_start = false;
                     }
                 } catch (Error e) {
-                    warning("Unable to load from clipboard.");
+                    warning(_("Unable to load from clipboard."));
                 }
             });
 		}
