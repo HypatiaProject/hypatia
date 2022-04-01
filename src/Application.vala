@@ -54,9 +54,10 @@ namespace Hypatia {
 
 		private void on_about_action () {
 			string[] authors = {"Nathan Dyer"};
-			string[] artists = {"Nathan Dyer (Initial Design)"};
+			string[] artists = {"Nathan Dyer (Initial Design)", "Tobias Bernard (Icon)"};
 			Gtk.show_about_dialog(this.active_window,
 				                  "program-name", "Hypatia",
+				                  "logo_icon_name", "com.github.HypatiaProject.hypatia",
 				                  "authors", authors,
 				                  "artists", artists,
 				                  "copyright", "Copyright © 2022 Nathan Dyer and Hypatia Project Contributors",

@@ -31,6 +31,8 @@ namespace Hypatia {
 
 	    private Gtk.Entry search_entry;
 
+	    private Gtk.Button tweet_button;
+
 	    private Gtk.Spinner loading_spinner;
 
 	    private bool new_start = true;
@@ -61,7 +63,7 @@ namespace Hypatia {
 			var share_button = new Gtk.Button.from_icon_name("emblem-shared-symbolic");
 			var share_popover = new Gtk.Popover();
 
-			var tweet_button = new Gtk.Button.with_label("Share article via Tweet");
+			tweet_button = new Gtk.Button.with_label("Share article via Tweet");
 			tweet_button.clicked.connect(() => {
 
                 string encoded_text = """Look%20what%20I%20found%20on%20Wikipedia%20using%20%23Hypatia%3A%20""";
@@ -79,6 +81,15 @@ namespace Hypatia {
 
                 } catch (SpawnError e) {
                     warning ("Error: %s\n", e.message);
+                }
+            });
+            tweet_button.sensitive = false;
+
+            wikipedia_box.article_changed.connect((found) => {
+                if (found == true) {
+                    tweet_button.sensitive = true;
+                } else {
+                    tweet_button.sensitive = false;
                 }
             });
 
@@ -165,6 +176,11 @@ namespace Hypatia {
             show_welcome_at_startup.toggled.connect(() => {
                 app.settings.set_boolean("show-welcome", show_welcome_at_startup.get_active());
             });
+
+            var separator = new Gtk.Separator(Gtk.Orientation.HORIZONTAL);
+            separator.margin_top = 12;
+            separator.margin_bottom = 12;
+            settings_box.append (separator);
 
 
             var about_button = new Gtk.Button.with_label("About");

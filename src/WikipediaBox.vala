@@ -19,6 +19,8 @@
 namespace Hypatia {
 	public class WikipediaBox : Gtk.Box {
 
+	    public signal void article_changed (bool found);
+
 	    private Gtk.Label title_label;
 	    private Gtk.Label extract_label;
 	    private Gtk.LinkButton link_button;
@@ -55,10 +57,13 @@ namespace Hypatia {
                 link_button.set_uri(entry.url);
                 link_button.show();
                 extract_label.show();
+                article_changed(true);
+
             } else {
                 extract_label.hide();
                 link_button.hide();
                 title_label.set_text(NOT_FOUND_TEXT);
+                article_changed(false);
             }
         }
 
