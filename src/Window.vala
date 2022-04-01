@@ -61,6 +61,7 @@ namespace Hypatia {
 			wikipedia_box = new WikipediaBox();
 
 			var share_button = new Gtk.Button.from_icon_name("emblem-shared-symbolic");
+			share_button.set_tooltip_text(_("Share"));
 			var share_popover = new Gtk.Popover();
 
 			tweet_button = new Gtk.Button.with_label(_("Share article via Tweet"));
@@ -103,6 +104,7 @@ namespace Hypatia {
 			});
 
             var settings_button = new Gtk.Button.from_icon_name("open-menu-symbolic");
+            settings_button.set_tooltip_text(_("Menu"));
             var settings_popover = new Gtk.Popover();
             settings_popover.set_parent(settings_button);
             var settings_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 6);
@@ -211,6 +213,7 @@ namespace Hypatia {
 			carousel.margin_bottom = 24;
 
             var search_term_button = new Gtk.Button.from_icon_name("system-search-symbolic");
+            search_term_button.set_tooltip_text(_("Show Search"));
             var search_term_revealer = new Gtk.Revealer();
             search_term_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_LEFT);
             var search_term_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
@@ -225,18 +228,22 @@ namespace Hypatia {
                 if(search_term_revealer.child_revealed) {
                     search_term_revealer.set_reveal_child(false);
                     search_term_button.set_icon_name("system-search-symbolic");
+                    search_term_button.set_tooltip_text(_("Show Search"));
                 } else {
                     search_term_revealer.set_reveal_child(true);
                     search_term_button.set_icon_name("go-next-symbolic");
+                    search_term_button.set_tooltip_text(_("Hide Search"));
                     search_entry.grab_focus();
                 }
             });
 
             var copy_clipboard_button = new Gtk.Button.from_icon_name("edit-copy-symbolic");
+            copy_clipboard_button.set_tooltip_text(_("Copy From Clipboard"));
             copy_clipboard_button.clicked.connect(on_load_clipboard);
             search_term_box.prepend(copy_clipboard_button);
 
             var activate_search_button = new Gtk.Button.from_icon_name("system-search-symbolic");
+            activate_search_button.set_tooltip_text(_("Search"));
             search_term_box.append(activate_search_button);
             activate_search_button.get_style_context().add_class("linked");
 
@@ -261,9 +268,11 @@ namespace Hypatia {
                 if(search_term_revealer.child_revealed) {
                     search_term_revealer.set_reveal_child(false);
                     search_term_button.set_icon_name("system-search-symbolic");
+                    search_term_button.set_tooltip_text(_("Show Search"));
                 } else {
                     search_term_revealer.set_reveal_child(true);
                     search_term_button.set_icon_name("go-next-symbolic");
+                    search_term_button.set_tooltip_text(_("Hide Search"));
                     search_entry.grab_focus();
                 }
             });
