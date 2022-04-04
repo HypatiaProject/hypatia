@@ -32,6 +32,7 @@ namespace Hypatia {
 	    private Gtk.Entry search_entry;
 
 	    private Gtk.Button tweet_button;
+	    private Gtk.Button search_term_button;
 
 	    private Gtk.Spinner loading_spinner;
 
@@ -41,7 +42,7 @@ namespace Hypatia {
 			var style_manager = Adw.StyleManager.get_default();
             style_manager.color_scheme = Adw.ColorScheme.PREFER_LIGHT;
 
-			this.set_default_size(600, 350);
+			this.set_default_size(750, 450);
 
             var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
             this.set_content(box);
@@ -185,6 +186,7 @@ namespace Hypatia {
 
             var about_button = new Gtk.Button.with_label(_("About"));
             about_button.clicked.connect(() => {
+                settings_popover.popdown();
                 show_about_requested();
             });
             settings_box.append(about_button);
@@ -210,7 +212,7 @@ namespace Hypatia {
 			carousel.margin_top = 24;
 			carousel.margin_bottom = 24;
 
-            var search_term_button = new Gtk.Button.from_icon_name("system-search-symbolic");
+            search_term_button = new Gtk.Button.from_icon_name("system-search-symbolic");
             search_term_button.set_tooltip_text(_("Show Search"));
             var search_term_revealer = new Gtk.Revealer();
             search_term_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_LEFT);
@@ -407,6 +409,10 @@ namespace Hypatia {
 		    var app = application as Hypatia.Application;
 		    search_entry.text = text;
 		    app.search_text = text;
+		}
+
+		public void toggle_search() {
+		    search_term_button.clicked();
 		}
 
 		private void on_load_clipboard () {

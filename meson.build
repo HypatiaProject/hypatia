@@ -11,7 +11,7 @@ add_global_arguments([
     '-w',
 ], language: 'c')
 
-dependency('gtk4', version: '>= 4.6.0')
+dependency('gtk4', version: '>= 4.4.1')
 dependency('libadwaita-1', version :'>=1.0.0')
 dependency('gee-0.8', version: '>= 0.8.0')
 
