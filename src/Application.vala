@@ -36,7 +36,7 @@ namespace Hypatia {
             };
             this.add_action_entries (action_entries, this);
             this.set_accels_for_action ("app.quit", {"<primary>q"});
-            this.set_accels_for_action ("app.about", {"<primary>a"});
+            this.set_accels_for_action ("app.about", {"<Ctrl><Shift>a"});
             this.set_accels_for_action ("app.toggle-search", {"<primary>l"});
 
 		    settings = new GLib.Settings("com.github.HypatiaProject.hypatia");
