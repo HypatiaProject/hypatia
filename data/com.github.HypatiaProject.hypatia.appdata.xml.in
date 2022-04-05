@@ -9,6 +9,8 @@
     interesting topics.
   </summary>
   <developer_name>Nathan Dyer and Hypatia Project Contributors</developer_name>
+  <url type="homepage">https://github.com/HypatiaProject/hypatia</url>
+  <url type="bugtracker">https://github.com/HypatiaProject/hypatia/issues</url>
 
   <screenshots>
     <screenshot type="default">
@@ -45,8 +47,6 @@
     <p>Searching for any term or phrase will search those sources for information, and the app will present any relevant results that it finds.</p>
 
   </description>
-
-  <url type="bugtracker">https://github.com/HypatiaProject/hypatia/issues</url>
 
   <provides>
     <binary>hypatia</binary>
