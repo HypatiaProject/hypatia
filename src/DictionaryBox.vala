@@ -53,6 +53,7 @@ namespace Hypatia {
             pronunciation_label.set_wrap(true);
 
             source_label = new Gtk.Label(_("Definitions provided by Wiktionary via Free Dictionary API"));
+            source_label.wrap = true;
             source_label.halign = Gtk.Align.START;
             source_label.get_style_context().add_class("accent");
             source_label.hide();

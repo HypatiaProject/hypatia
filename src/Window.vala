@@ -23,10 +23,12 @@ namespace Hypatia {
 	    public signal void show_about_requested ();
 
 	    private InstantAnswersBox answers_box;
+	    private Gtk.ScrolledWindow answers_box_scrolled;
 	    private DictionaryBox dictionary_box;
 	    private WikipediaBox wikipedia_box;
 
-	    private Adw.Carousel carousel;
+	    private Adw.ViewStack stack;
+		private Adw.ViewSwitcherBar view;
 
 	    private Gtk.Entry search_entry;
 
@@ -37,12 +39,12 @@ namespace Hypatia {
 
 		public Window (Hypatia.Application app) {
 			Object(application: app);
-
+			
 			var style_manager = Adw.StyleManager.get_default();
-            style_manager.color_scheme = Adw.ColorScheme.PREFER_LIGHT;
+            style_manager.color_scheme = Adw.ColorScheme.DEFAULT;
 
 			this.set_default_size(750, 450);
-
+			
             var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
             this.set_content(box);
 
@@ -52,9 +54,10 @@ namespace Hypatia {
 
 			var title_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 12);
             header.set_title_widget(title_box);
-
-			var welcome_box = new WelcomeBox();
-			answers_box = new InstantAnswersBox();
+			
+			answers_box = new InstantAnswersBox();	
+			answers_box_scrolled = new Gtk.ScrolledWindow();
+			answers_box_scrolled.set_child(answers_box);
 			dictionary_box = new DictionaryBox();
 			wikipedia_box = new WikipediaBox();
 
@@ -103,47 +106,42 @@ namespace Hypatia {
 
             var settings_button = new Gtk.Button.from_icon_name("open-menu-symbolic");
             settings_button.set_tooltip_text(_("Menu"));
+            
             var settings_popover = new Gtk.Popover();
             settings_popover.set_parent(settings_button);
+            
             var settings_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 6);
 
             var run_in_background_label = new Gtk.Label(_("Keep running in background"));
             run_in_background_label.halign = Gtk.Align.START;
             run_in_background_label.hexpand = true;
+            
             var run_in_background_checkbox = new Gtk.CheckButton();
             run_in_background_checkbox.margin_start = 12;
+            
             var run_in_background_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             run_in_background_box.hexpand = true;
             run_in_background_box.append (run_in_background_label);
             run_in_background_box.append (run_in_background_checkbox);
+            
             settings_box.append(run_in_background_box);
 
 
             var load_from_clipboard_label = new Gtk.Label(_("Automatically load content from clipboard"));
             load_from_clipboard_label.halign = Gtk.Align.START;
             load_from_clipboard_label.hexpand = true;
+            
             var load_from_clipboard = new Gtk.CheckButton();
             load_from_clipboard.margin_start = 12;
+            
             var load_from_clipboard_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             load_from_clipboard_box.append (load_from_clipboard_label);
             load_from_clipboard_box.append (load_from_clipboard);
+            
             settings_box.append(load_from_clipboard_box);
-
-
-            var show_welcome_at_startup_label = new Gtk.Label(_("Show welcome at start-up"));
-            show_welcome_at_startup_label.halign = Gtk.Align.START;
-            show_welcome_at_startup_label.hexpand = true;
-            var show_welcome_at_startup = new Gtk.CheckButton();
-            show_welcome_at_startup.margin_start = 12;
-            var show_welcome_at_startup_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-            show_welcome_at_startup_box.append (show_welcome_at_startup_label);
-            show_welcome_at_startup_box.append (show_welcome_at_startup);
-            settings_box.append (show_welcome_at_startup_box);
-
 
             var run_in_background = app.settings.get_boolean("run-in-background");
             var automatically_load_from_clipboard = app.settings.get_boolean("load-from-clipboard");
-            var show_welcome = app.settings.get_boolean("show-welcome");
 
             if (run_in_background) {
                 run_in_background_checkbox.set_active(true);
@@ -157,12 +155,6 @@ namespace Hypatia {
                 load_from_clipboard.set_active(false);
             }
 
-            if (show_welcome) {
-                show_welcome_at_startup.set_active(true);
-            } else {
-                show_welcome_at_startup.set_active(false);
-            }
-
             run_in_background_checkbox.toggled.connect(() => {
                 app.settings.set_boolean("run-in-background", run_in_background_checkbox.get_active());
 
@@ -171,10 +163,6 @@ namespace Hypatia {
             load_from_clipboard.toggled.connect(() => {
                 app.settings.set_boolean("load-from-clipboard", load_from_clipboard.get_active());
 
-            });
-
-            show_welcome_at_startup.toggled.connect(() => {
-                app.settings.set_boolean("show-welcome", show_welcome_at_startup.get_active());
             });
 
             var separator = new Gtk.Separator(Gtk.Orientation.HORIZONTAL);
@@ -201,16 +189,6 @@ namespace Hypatia {
             settings_box.append(donate_button);
 
 
-            // Set up the main view for the application
-
-            carousel = new Adw.Carousel();
-			carousel.set_spacing(3000);
-			carousel.vexpand = true;
-			carousel.margin_start = 24;
-			carousel.margin_end = 24;
-			carousel.margin_top = 24;
-			carousel.margin_bottom = 24;
-
             search_term_button = new Gtk.Button.from_icon_name("system-search-symbolic");
             search_term_button.set_tooltip_text(_("Show Search"));
             var search_term_revealer = new Gtk.Revealer();
@@ -218,7 +196,6 @@ namespace Hypatia {
             var search_term_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
             search_entry = new Gtk.Entry();
             search_entry.get_style_context().add_class("linked");
-            search_entry.width_chars = 35;
             search_entry.placeholder_text = _("Enter Search Term");
             search_term_box.append(search_entry);
             search_term_revealer.set_child(search_term_box);
@@ -281,8 +258,8 @@ namespace Hypatia {
             header.pack_end(settings_button);
             header.pack_end(share_button);
             header.pack_end(search_term_button);
-            header.pack_end(search_term_revealer);
             header.pack_end(loading_spinner);
+            header.set_title_widget(search_term_revealer);
 
 			var dictionary_scrolled = new Gtk.ScrolledWindow();
 			dictionary_scrolled.set_child(dictionary_box);
@@ -296,87 +273,23 @@ namespace Hypatia {
 			wikipedia_scrolled.hexpand = true;
 			wikipedia_scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
 
-            if(app.settings.get_boolean("show-welcome")) {
-                carousel.append(welcome_box);
-            }
-            carousel.append(answers_box);
-            carousel.append(dictionary_scrolled);
-            carousel.append(wikipedia_scrolled);
+            stack = new Adw.ViewStack();
+            stack.margin_top = 5;
+            stack.margin_bottom = 5;
+            stack.margin_start = 10;
+            stack.margin_end = 10;
+            stack.add_titled(answers_box_scrolled, "instant_answers", _("Instant Answers")).icon_name = "help-about-symbolic";
+			stack.add_titled(dictionary_scrolled, "definitions", _("Definitions")).icon_name = "view-reveal-symbolic";
+			stack.add_titled(wikipedia_scrolled, "wikipedia", _("Wikipedia")).icon_name = "view-paged-symbolic";
+			
+            box.append(stack);
+            
+			view = new Adw.ViewSwitcherBar();
+			view.reveal = true;
+			view.set_stack(stack);
 
-            box.append(carousel);
+            box.append(view);
 
-            var button_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-            var instant_answers_button = new Gtk.ToggleButton.with_label(_("Instant Answers"));
-            var dictionary_button = new Gtk.ToggleButton.with_label(_("Definitions"));
-            var wikipedia_button = new Gtk.ToggleButton.with_label(_("Wikipedia"));
-
-            button_box.append(instant_answers_button);
-            button_box.append(dictionary_button);
-            button_box.append(wikipedia_button);
-            button_box.get_style_context().add_class("linked");
-            button_box.homogeneous = true;
-
-            var button_revealer = new Gtk.Revealer();
-            button_revealer.set_child(button_box);
-
-            instant_answers_button.clicked.connect(() => {
-                carousel.scroll_to(answers_box, true);
-            });
-
-            dictionary_button.clicked.connect(() => {
-                carousel.scroll_to(dictionary_scrolled, true);
-            });
-
-            wikipedia_button.clicked.connect(() => {
-                carousel.scroll_to(wikipedia_scrolled, true);
-            });
-
-            welcome_box.next_page_selected.connect(() => {
-                carousel.remove(welcome_box);
-                carousel.scroll_to(answers_box, true);
-                if (app.settings.get_boolean("first-launch")) {
-                    app.settings.set_boolean("show-welcome", false);
-                    app.settings.set_boolean("first-launch", false);
-                }
-            });
-
-            if (!app.settings.get_boolean("show-welcome")) {
-                button_revealer.reveal_child = true;
-                instant_answers_button.set_active(true);
-                dictionary_button.set_active(false);
-                wikipedia_button.set_active(false);
-            }
-
-            carousel.page_changed.connect((page) => {
-                switch (page) {
-                    case 0:
-                        button_revealer.reveal_child = true;
-                        instant_answers_button.set_active(true);
-                        dictionary_button.set_active(false);
-                        wikipedia_button.set_active(false);
-                        break;
-
-                    case 1:
-                        button_revealer.reveal_child = true;
-                        instant_answers_button.set_active(false);
-                        dictionary_button.set_active(true);
-                        wikipedia_button.set_active(false);
-                        break;
-
-                    case 2:
-                        button_revealer.reveal_child = true;
-                        instant_answers_button.set_active(false);
-                        dictionary_button.set_active(false);
-                        wikipedia_button.set_active(true);
-                        break;
-
-                    default:
-                        button_revealer.reveal_child = false;
-                        break;
-                }
-            });
-
-            box.append(button_revealer);
             loading_spinner.hide();
             notify["visible"].connect(() => {
                 if(this.visible) {
