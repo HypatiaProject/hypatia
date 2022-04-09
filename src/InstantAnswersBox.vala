@@ -23,6 +23,7 @@ namespace Hypatia {
 	    private Gtk.Label abstract_text_label;
 	    private Gtk.Label source_label;
 	    private Gtk.Image image;
+	    private Gtk.ScrolledWindow abstract_text_scrolled;
 
 	    private string NOT_FOUND_TEXT = _("No instant answer found");
 
@@ -34,14 +35,24 @@ namespace Hypatia {
             heading_label = new Gtk.Label(NOT_FOUND_TEXT);
             heading_label.get_style_context().add_class("title-1");
             heading_label.halign = Gtk.Align.START;
+            
             abstract_text_label = new Gtk.Label("");
-            abstract_text_label.set_max_width_chars(40);
             abstract_text_label.set_wrap(true);
             abstract_text_label.halign = Gtk.Align.START;
+            abstract_text_label.valign = Gtk.Align.START;
             abstract_text_label.justify = Gtk.Justification.FILL;
+            abstract_text_label.hexpand = true;            
+            abstract_text_label.vexpand = true;
+            
+            abstract_text_scrolled = new Gtk.ScrolledWindow();
+            abstract_text_scrolled.hexpand = true;
+            abstract_text_scrolled.vexpand = true;
+            abstract_text_scrolled.set_child(abstract_text_label);
+            
             image = new Gtk.Image();
 
             var left_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
+            
             var right_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
             right_box.get_style_context().add_class("card");
             right_box.valign = Gtk.Align.START;
@@ -51,7 +62,7 @@ namespace Hypatia {
             source_label.get_style_context().add_class("accent");
 
             left_box.append(heading_label);
-            left_box.append(abstract_text_label);
+            left_box.append(abstract_text_scrolled);
             left_box.append(source_label);
             left_box.hexpand = true;
             right_box.append(image);

@@ -27,7 +27,6 @@ namespace Hypatia {
 	    private WikipediaBox wikipedia_box;
 
 	    private Adw.Carousel carousel;
-	    private Gtk.ScrolledWindow answers_scrolled;
 
 	    private Gtk.Entry search_entry;
 
@@ -285,12 +284,6 @@ namespace Hypatia {
             header.pack_end(search_term_revealer);
             header.pack_end(loading_spinner);
 
-			answers_scrolled = new Gtk.ScrolledWindow();
-			answers_scrolled.set_child(answers_box);
-			answers_scrolled.vexpand = true;
-			answers_scrolled.hexpand = true;
-			answers_scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
-
 			var dictionary_scrolled = new Gtk.ScrolledWindow();
 			dictionary_scrolled.set_child(dictionary_box);
 			dictionary_scrolled.vexpand = true;
@@ -306,7 +299,7 @@ namespace Hypatia {
             if(app.settings.get_boolean("show-welcome")) {
                 carousel.append(welcome_box);
             }
-            carousel.append(answers_scrolled);
+            carousel.append(answers_box);
             carousel.append(dictionary_scrolled);
             carousel.append(wikipedia_scrolled);
 
@@ -327,7 +320,7 @@ namespace Hypatia {
             button_revealer.set_child(button_box);
 
             instant_answers_button.clicked.connect(() => {
-                carousel.scroll_to(answers_scrolled, true);
+                carousel.scroll_to(answers_box, true);
             });
 
             dictionary_button.clicked.connect(() => {
@@ -340,7 +333,7 @@ namespace Hypatia {
 
             welcome_box.next_page_selected.connect(() => {
                 carousel.remove(welcome_box);
-                carousel.scroll_to(answers_scrolled, true);
+                carousel.scroll_to(answers_box, true);
                 if (app.settings.get_boolean("first-launch")) {
                     app.settings.set_boolean("show-welcome", false);
                     app.settings.set_boolean("first-launch", false);
