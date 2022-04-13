@@ -17,17 +17,21 @@
  */
 
 namespace Hypatia {
-	public class WelcomeBox : Gtk.Box {
+	public class WelcomeBox : Adw.Window {
 
 	    public signal void next_page_selected();
-
+	    public Gtk.Box box;
+	    
         public WelcomeBox () {
-            this.set_orientation(Gtk.Orientation.VERTICAL);
-            this.set_spacing(12);
+            this.modal = true;
+            this.set_default_size (200, 200);
+            box = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
+            box.set_orientation(Gtk.Orientation.VERTICAL);
 
             var welcome_label = new Gtk.Label("Welcome to Hypatia");
             welcome_label.get_style_context().add_class("large-title");
-            this.append(welcome_label);
+            welcome_label.margin_top = 30;
+            box.append(welcome_label);
 
             string welcome_text = _("Hypatia is a research tool that finds information as you use your device.\n\nYou can enter any word or topic in the search field to find instant answers, photos, definitions, synonyms, and Wikipedia articles.\n\nBy default, every time you open the application it automatically searches for what's on your clipboard, so you can look up information about things as you browse the web and use your device. For the best workflow, we recommend setting a keyboard shortcut in your OS to launch the application, so you can find answers in a single keypress.");
 
@@ -35,17 +39,24 @@ namespace Hypatia {
             description_label.set_width_chars (40);
             description_label.set_wrap (true);
             description_label.vexpand = true;
-            description_label.valign = Gtk.Align.CENTER;
-            this.append(description_label);
+            description_label.valign = Gtk.Align.START;
+            description_label.halign = Gtk.Align.START;
+            description_label.margin_end = 15;
+            description_label.margin_top = 15;
+            description_label.margin_start = 15;
+            description_label.margin_end = 15;
+            description_label.justify = Gtk.Justification.CENTER;
+            box.append(description_label);
 
             var button = new Gtk.Button.with_label (_("Get Started"));
-            button.get_style_context ().add_class("suggested-action");
-            button.halign = Gtk.Align.END;
-            button.margin_top = 12;
+            button.css_classes = {"suggested-action","pill"};
+            button.halign = Gtk.Align.CENTER;
+            button.margin_bottom = 30;
             button.clicked.connect(() => {
                 next_page_selected();
             });
-            this.append(button);
+            box.append(button);
+            this.set_content (box);
         }
 	}
 }
