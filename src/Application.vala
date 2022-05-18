@@ -52,7 +52,7 @@ namespace Hypatia {
 			    window.show_about_requested.connect(on_about_action);
 			    window.close_request.connect(exit_request);
 
-			    string[] authors = {"Nathan Dyer"};
+			    string[] authors = {"Nathan Dyer (Initial Release and Maintainer)", "Ali Galal"};
 			    string[] artists = {"Nathan Dyer (Initial Design)", "Tobias Bernard (Icon)"};
 			    string[] special_thanks = {"Dos Gatos Coffee Bar in beautiful, downtown Johsnon City, TN USA"};
 
@@ -62,7 +62,7 @@ namespace Hypatia {
 			    about_dialog.authors = authors;
 			    about_dialog.artists = artists;
 			    about_dialog.copyright = "Copyright © 2022 Nathan Dyer and Hypatia Project Contributors";
-			    about_dialog.version = "0.1.0";
+			    about_dialog.version = "0.1.1";
 			    about_dialog.add_credit_section ("Special Thanks", special_thanks);
 
 			    about_dialog.set_transient_for (window);

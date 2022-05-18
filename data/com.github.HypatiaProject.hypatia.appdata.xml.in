@@ -58,6 +58,12 @@
   </content_rating>
 
   <releases>
+    <release version="0.1.1" date="2022-05-18" urgency="high">
+      <description>
+        <p>The text portion of the instant answer view now scrolls independently, rather than the entire view (thanks @ali-sameh-galal!)</p>
+	<p>Features improved metadata so the app listing on Flathub and in software download apps is top notch (thanks @cassidyjames!)</p>
+      </description>
+    </release>
     <release version="0.1.0" date="2022-04-04" urgency="high">
       <description>
         <p>First stable release.</p>
