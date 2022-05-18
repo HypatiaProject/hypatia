@@ -23,7 +23,8 @@ namespace Hypatia {
 	    private Gtk.Label abstract_text_label;
 	    private Gtk.Label source_label;
 	    private Gtk.Image image;
-	    private Gtk.ScrolledWindow abstract_text_scrolled;
+	    private Gtk.Box left_box;
+	    private Gtk.Separator separator;
 
 	    private string NOT_FOUND_TEXT = _("No instant answer found");
 
@@ -32,43 +33,52 @@ namespace Hypatia {
             this.set_spacing(12);
             this.vexpand = false;
 
+            image = new Gtk.Image();
+
+			separator = new Gtk.Separator(Gtk.Orientation.HORIZONTAL);
+			separator.hide();
+
             heading_label = new Gtk.Label(NOT_FOUND_TEXT);
-            heading_label.get_style_context().add_class("title-1");
+            heading_label.css_classes = {"title-1"};
+            heading_label.wrap = true;
+            heading_label.margin_top = 5;
+            heading_label.margin_bottom = 5;
+            heading_label.margin_start = 10;
+            heading_label.margin_end = 10;
             heading_label.halign = Gtk.Align.START;
             
             abstract_text_label = new Gtk.Label("");
-            abstract_text_label.set_wrap(true);
+            abstract_text_label.wrap = true;
             abstract_text_label.halign = Gtk.Align.START;
             abstract_text_label.valign = Gtk.Align.START;
             abstract_text_label.justify = Gtk.Justification.FILL;
             abstract_text_label.hexpand = true;            
             abstract_text_label.vexpand = true;
+            abstract_text_label.margin_top = 5;
+            abstract_text_label.margin_bottom = 5;
+            abstract_text_label.margin_start = 10;
+            abstract_text_label.margin_end = 10;
+            abstract_text_label.selectable = true;
             
-            abstract_text_scrolled = new Gtk.ScrolledWindow();
-            abstract_text_scrolled.hexpand = true;
-            abstract_text_scrolled.vexpand = true;
-            abstract_text_scrolled.set_child(abstract_text_label);
-            
-            image = new Gtk.Image();
 
-            var left_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
-            
-            var right_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
-            right_box.get_style_context().add_class("card");
-            right_box.valign = Gtk.Align.START;
+            left_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
 
             source_label = new Gtk.Label(_("Answers provided by DuckDuckGo"));
             source_label.halign = Gtk.Align.START;
-            source_label.get_style_context().add_class("accent");
+            source_label.css_classes = {"accent"};
+            source_label.margin_top = 5;
+            source_label.margin_bottom = 5;
+            source_label.margin_start = 10;
+            source_label.margin_end = 10;
+			
 
             left_box.append(heading_label);
-            left_box.append(abstract_text_scrolled);
+            left_box.append(separator); 
+            left_box.append(abstract_text_label);
             left_box.append(source_label);
             left_box.hexpand = true;
-            right_box.append(image);
 
             this.append(left_box);
-            this.append(right_box);
 
             source_label.hide();
             image.hide();
@@ -88,14 +98,15 @@ namespace Hypatia {
                         var session = new Soup.Session();
                         var message = new Soup.Message("GET", answer.image);
                         InputStream stream = session.send(message);
-                        pixbuf = new Gdk.Pixbuf.from_stream(stream, null);
+                        pixbuf = new Gdk.Pixbuf.from_stream(stream, null);                    
                         image.set_from_pixbuf(pixbuf);
                         image.set_pixel_size(250);
-                        image.margin_top = 12;
-                        image.margin_bottom = 12;
-                        image.margin_start = 12;
-                        image.margin_end = 12;
+                        image.margin_top = 10;
+                        left_box.prepend(image);
+			            left_box.css_classes = {"card"};    
+			            heading_label.halign = Gtk.Align.CENTER;
                         image.show();
+                        separator.show();
 
                     } catch (Error e) {
                         warning(_("Failed to load image. %s"), e.message);

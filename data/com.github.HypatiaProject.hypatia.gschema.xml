@@ -16,11 +16,6 @@
         shortcuts.
       </description>
     </key>
-	  <key name="show-welcome" type="b">
-      <default>true</default>
-      <summary>Show or hide the welcome screen.</summary>
-      <description>Whether or not to show or hide the welcome screen.</description>
-    </key>
 	  <key name="first-launch" type="b">
       <default>true</default>
       <summary>Whether this is the first time the app runs.</summary>
