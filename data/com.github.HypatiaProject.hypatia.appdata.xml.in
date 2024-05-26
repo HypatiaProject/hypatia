@@ -5,12 +5,14 @@
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>Hypatia</name>
-  <summary>A research helper tool that provides context and information about
-    interesting topics.
-  </summary>
+  <summary>A research helper tool that provides context and information about interesting topics</summary>
   <developer_name>Nathan Dyer and Hypatia Project Contributors</developer_name>
+  <developer id="io.github.hypatiaproject">
+    <name>Nathan Dyer and Hypatia Project Contributors</name>
+  </developer>
   <url type="homepage">https://github.com/HypatiaProject/hypatia</url>
   <url type="bugtracker">https://github.com/HypatiaProject/hypatia/issues</url>
+  <url type="vcs-browser">https://github.com/HypatiaProject/hypatia</url>
 
   <screenshots>
     <screenshot type="default">

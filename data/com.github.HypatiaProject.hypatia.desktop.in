@@ -4,5 +4,6 @@ Exec=hypatia
 Icon=com.github.HypatiaProject.hypatia
 Terminal=false
 Type=Application
-Categories=GTK;
+Categories=Utility;
+Keywords=Research;Wikipedia;Wiktionary;definition;explanation;
 StartupNotify=true
