@@ -1,7 +1,6 @@
 hypatia_sources = [
   'Main.vala',
   'Window.vala',
-  'WelcomeBox.vala',
   'WikipediaBox.vala',
   'DictionaryBox.vala',
   'InstantAnswersBox.vala',

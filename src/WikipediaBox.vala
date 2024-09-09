@@ -34,6 +34,8 @@ namespace Hypatia {
             title_label = new Gtk.Label(NOT_FOUND_TEXT);
             title_label.get_style_context().add_class("title-1");
             title_label.halign = Gtk.Align.START;
+            title_label.wrap = true;
+            
             extract_label = new Gtk.Label("");
             extract_label.halign = Gtk.Align.START;
             extract_label.set_max_width_chars(40);
