@@ -37,9 +37,9 @@ namespace Hypatia {
 
 		public Window (Hypatia.Application app) {
 			Object(application: app);
-
+			
 			var style_manager = Adw.StyleManager.get_default();
-            style_manager.color_scheme = Adw.ColorScheme.PREFER_LIGHT;
+            style_manager.color_scheme = Adw.ColorScheme.DEFAULT;
 
 			this.set_default_size(750, 450);
 
@@ -91,15 +91,15 @@ namespace Hypatia {
                     tweet_button.sensitive = false;
                 }
             });
-
-			share_popover.set_parent(share_button);
-			var share_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
-			share_box.append(tweet_button);
-			share_popover.set_child(share_box);
-
-			share_button.clicked.connect(() => {
-			   share_popover.popup();
-			});
+            
+            share_popover.set_parent(share_button);
+            var share_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+            share_box.append(tweet_button);
+            share_popover.set_child(share_box);
+            
+            share_button.clicked.connect(() => {
+               share_popover.popup();
+            });
 
             var settings_button = new Gtk.Button.from_icon_name("open-menu-symbolic");
             settings_button.set_tooltip_text(_("Menu"));
@@ -297,7 +297,7 @@ namespace Hypatia {
 			wikipedia_scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
 
             if(app.settings.get_boolean("show-welcome")) {
-                carousel.append(welcome_box);
+                welcome_box.show();
             }
             carousel.append(answers_box);
             carousel.append(dictionary_scrolled);
@@ -318,7 +318,8 @@ namespace Hypatia {
 
             var button_revealer = new Gtk.Revealer();
             button_revealer.set_child(button_box);
-
+            button_revealer.reveal_child = true;
+            
             instant_answers_button.clicked.connect(() => {
                 carousel.scroll_to(answers_box, true);
             });
@@ -332,7 +333,7 @@ namespace Hypatia {
             });
 
             welcome_box.next_page_selected.connect(() => {
-                carousel.remove(welcome_box);
+                welcome_box.hide();
                 carousel.scroll_to(answers_box, true);
                 if (app.settings.get_boolean("first-launch")) {
                     app.settings.set_boolean("show-welcome", false);
@@ -341,7 +342,6 @@ namespace Hypatia {
             });
 
             if (!app.settings.get_boolean("show-welcome")) {
-                button_revealer.reveal_child = true;
                 instant_answers_button.set_active(true);
                 dictionary_button.set_active(false);
                 wikipedia_button.set_active(false);
@@ -350,28 +350,25 @@ namespace Hypatia {
             carousel.page_changed.connect((page) => {
                 switch (page) {
                     case 0:
-                        button_revealer.reveal_child = true;
                         instant_answers_button.set_active(true);
                         dictionary_button.set_active(false);
                         wikipedia_button.set_active(false);
                         break;
 
                     case 1:
-                        button_revealer.reveal_child = true;
                         instant_answers_button.set_active(false);
                         dictionary_button.set_active(true);
                         wikipedia_button.set_active(false);
                         break;
 
                     case 2:
-                        button_revealer.reveal_child = true;
                         instant_answers_button.set_active(false);
                         dictionary_button.set_active(false);
                         wikipedia_button.set_active(true);
                         break;
 
                     default:
-                        button_revealer.reveal_child = false;
+
                         break;
                 }
             });
@@ -388,6 +385,8 @@ namespace Hypatia {
                     });
                 }
             });
+            
+            welcome_box.set_transient_for(this);
 		}
 
 		public void set_entries(InstantAnswer answer, DictionaryEntry dict, WikipediaEntry wiki) {
