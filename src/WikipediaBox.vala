@@ -24,6 +24,7 @@ namespace Hypatia {
 	    private Gtk.Label title_label;
 	    private Gtk.Label extract_label;
 	    private Gtk.LinkButton link_button;
+	    private Gtk.Button wike_button;
 
 	    private string NOT_FOUND_TEXT = _("No Wikipedia article found.");
 
@@ -42,12 +43,45 @@ namespace Hypatia {
 
             link_button = new Gtk.LinkButton.with_label("https://wikipedia.org", "Read more on Wikipedia");
             link_button.halign = Gtk.Align.CENTER;
+            
+            wike_button = new Gtk.Button.with_label("Read More in Wike") {
+            	css_classes = {"suggested-action","pill"},
+            	halign = Gtk.Align.CENTER
+            };
+            
+            //FIXME: The app stop responding when trying to Open Wike and respond back when closing it.
+            wike_button.clicked.connect(()=>{
+            	string ls_stdout;
+                string ls_stderr;
+                int ls_status;
+                
+                //TODO: Use GLib.AppInfo.Launch instead to launch wike.
+                try {
+                    Process.spawn_command_line_sync("wike -u " + link_button.get_uri(),
+                        out ls_stdout,
+                        out ls_stderr,
+                        out ls_status);
+
+                } catch (SpawnError e) {
+                    warning ("Error: %s\n", e.message);
+                }
+            });
 
             this.append(title_label);
             this.append(extract_label);
             this.append(link_button);
+            this.append(wike_button);
 
             link_button.hide();
+            wike_button.hide();
+        }
+        //TODO: Use Glib.AppInfo instead to check for the existence of Wike.
+        public bool is_wike_installed() {
+        	if (FileUtils.test("/usr/bin/wike", FileTest.EXISTS)) {
+        		return true;
+        	} else {
+        		return false;
+        	}
         }
 
         public void set_wikipedia_entry (WikipediaEntry entry) {
@@ -56,12 +90,18 @@ namespace Hypatia {
                 extract_label.set_text (entry.extract.replace("\n", "\n\n"));
                 link_button.set_uri(entry.url);
                 link_button.show();
+                
+                if (is_wike_installed()) {
+                	wike_button.show();                	
+                }
+                
                 extract_label.show();
                 article_changed(true);
 
             } else {
                 extract_label.hide();
                 link_button.hide();
+                wike_button.hide();
                 title_label.set_text(NOT_FOUND_TEXT);
                 article_changed(false);
             }
