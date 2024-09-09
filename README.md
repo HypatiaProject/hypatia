@@ -1,3 +1,5 @@
+# We've moved! Find us on [Codeberg](https://codeberg.org/nathandyer/Hypatia)
+
 # Hypatia
 A research helper tool for Linux-based systems
 
